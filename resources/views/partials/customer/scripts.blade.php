@@ -1,0 +1,12 @@
+<script src="{{ asset('assets/customer/js/jquery.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script src="{{ asset('assets/customer/vendors/bootstrap/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/customer/vendors/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('assets/customer/vendors/countdown-date-loop-counter/loopcounter.js') }}"></script>
+<script src="{{ asset('assets/customer/js/jquery.counterup.js') }}"></script>
+<script src="{{ asset('assets/customer/vendors/modal-video/jquery-modal-video.min.js') }}"></script>
+<script src="{{ asset('assets/customer/vendors/masonry/masonry.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/customer/vendors/lightbox/dist/js/lightbox.min.js') }}"></script>
+<script src="{{ asset('assets/customer/vendors/slick/slick.min.js') }}"></script>
+<script src="{{ asset('assets/customer/js/jquery.slicknav.js') }}"></script>
+<script src="{{ asset('assets/customer/js/custom.min.js') }}"></script>
