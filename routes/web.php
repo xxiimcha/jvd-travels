@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\AdminAuthController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,5 +17,4 @@ Route::post('/customer/register', [CustomerAuthController::class, 'register'])->
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware('auth:admin')->name('dashboard');
 });
