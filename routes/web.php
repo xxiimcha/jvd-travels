@@ -7,6 +7,8 @@ use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\HotelController;
+use App\Http\Controllers\Admin\ItineraryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,4 +36,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/tours/store', [TourController::class, 'store'])->name('tours.store');
     Route::get('/tours/import-from-api', [TourController::class, 'importFromAPI'])->name('tours.import');
 
-});
+    // Hotels
+    Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
+    Route::post('/hotels/upload-image/{id}', [HotelController::class, 'uploadImage'])->name('hotels.uploadImage');
+
+    // Itineraries
+    Route::get('/itineraries', [ItineraryController::class, 'index'])->name('itineraries.index');
+    Route::post('/itineraries', [ItineraryController::class, 'store'])->name('itineraries.store');
+
+}); 
