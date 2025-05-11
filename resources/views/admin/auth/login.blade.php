@@ -22,9 +22,10 @@
             <form class="login-from" method="POST" action="{{ route('admin.login.submit') }}">
                 @csrf
                 <h1 class="site-title">
-                    <a href="#"><strong>JVD Admin</strong></a>
+                    <a href="#">
+                        <img src="{{ asset('assets/logo.png') }}" alt="">
+                    </a>
                 </h1>
-
                 @if(session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif

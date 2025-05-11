@@ -18,10 +18,9 @@
         <div class="container d-flex justify-content-between align-items-center">
             <div class="site-identity">
                 <p class="site-title">
-                    <a href="{{ url('/') }}" class="navbar-brand text-white fw-bold" style="font-size: 1.5rem;">
-                        JVD Travel and Tours
+                    <a href="{{ url('/') }}" class="navbar-brand d-flex align-items-center">
+                        <img src="{{ asset('assets/logo.png') }}" alt="JVD Travel and Tours Logo" style="height: 40px;">
                     </a>
-
                 </p>
             </div>
             <div class="main-navigation d-none d-lg-block">
