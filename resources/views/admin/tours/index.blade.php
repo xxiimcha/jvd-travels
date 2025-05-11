@@ -20,31 +20,40 @@
                 <tr>
                     <th>#</th>
                     <th>Title</th>
+                    <th>Tour Type</th>
                     <th>Duration</th>
                     <th>Price (₱)</th>
-                    <th>Season</th>
                     <th>Capacity</th>
-                    <th>Created</th>
+                    <th>Schedules</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($tours as $index => $tour)
+                @foreach ($tours as $index => $group)
+                @php
+                    $first = $group->first();
+                @endphp
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $tour->title }}</td>
-                    <td>{{ $tour->duration }} days</td>
-                    <td>{{ number_format($tour->price, 2) }}</td>
-                    <td>{{ $tour->season ?? 'Any' }}</td>
-                    <td>{{ $tour->capacity }}</td>
-                    <td>{{ $tour->created_at->format('Y-m-d') }}</td>
+                    <td>{{ $first->title }}</td>
+                    <td>{{ $first->tour_type }}</td>
+                    <td>{{ $first->duration_days }}D/{{ $first->duration_nights }}N</td>
+                    <td>₱{{ number_format($first->price, 2) }}</td>
+                    <td>{{ $first->capacity }}</td>
+                    <td>
+                        <ul class="mb-0">
+                            @foreach ($group as $schedule)
+                                <li>{{ \Carbon\Carbon::parse($schedule->schedule_date)->format('F j, Y') }}</li>
+                            @endforeach
+                        </ul>
+                    </td>
                     <td>
                         <a href="#" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
                         <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                         <form action="#" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this tour?')">
+                            <button class="btn btn-sm btn-danger" onclick="return confirm('Delete this tour schedule group?')">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
                         </form>

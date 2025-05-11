@@ -1,19 +1,20 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Tour;
+use App\Models\TourSchedule;
+use Illuminate\Support\Facades\Storage;
 
 class TourController extends Controller
 {
+   
     public function index()
     {
-        $tours = Tour::latest()->get();
+        $tours = TourSchedule::all()->groupBy('api_tour_id');
         return view('admin.tours.index', compact('tours'));
     }
-
+    
     public function create()
     {
         return view('admin.tours.create');
@@ -22,22 +23,40 @@ class TourController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'duration' => 'required|integer',
-            'price' => 'required|numeric',
-            'season' => 'nullable|string',
-            'capacity' => 'required|integer',
-            'brochure' => 'nullable|image|max:2048',
+            'api_tour_id'     => 'required|integer',
+            'title'           => 'required|string|max:255',
+            'description'     => 'nullable|string',
+            'tour_type'       => 'required|string|max:50',
+            'duration_days'   => 'required|integer|min:1',
+            'duration_nights' => 'required|integer|min:0',
+            'price'           => 'required|numeric',
+            'capacity'        => 'required|integer|min:1',
+            'schedules'       => 'required|array|min:1',
+            'schedules.*'     => 'required|date|after_or_equal:today',
+            'brochure'        => 'nullable|image|max:2048',
         ]);
 
+        $brochurePath = null;
         if ($request->hasFile('brochure')) {
-            $validated['brochure'] = $request->file('brochure')->store('brochures', 'public');
+            $brochurePath = $request->file('brochure')->store('brochures', 'public');
         }
 
-        Tour::create($validated);
+        foreach ($request->schedules as $scheduleDate) {
+            TourSchedule::create([
+                'api_tour_id'     => $validated['api_tour_id'],
+                'title'           => $validated['title'],
+                'description'     => $validated['description'],
+                'tour_type'       => $validated['tour_type'],
+                'duration_days'   => $validated['duration_days'],
+                'duration_nights' => $validated['duration_nights'],
+                'price'           => $validated['price'],
+                'price_basis'     => $request->price_basis ?? null,
+                'capacity'        => $validated['capacity'],
+                'schedule_date'   => $scheduleDate,
+                'brochure'        => $brochurePath,
+            ]);
+        }
 
-        return redirect()->route('admin.tours.create')->with('success', 'Tour created successfully.');
+        return redirect()->route('admin.tours.create')->with('success', 'Tour schedules created successfully.');
     }
-
 }
