@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('title', 'Add Itinerary to Tours')
 
 @section('content')
@@ -8,22 +9,21 @@
     </div>
 
     <div class="card-body">
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+        <div id="itineraryResponse" class="mb-3"></div>
 
-        <form action="{{ route('admin.itineraries.store') }}" method="POST">
+        <form id="itineraryForm">
             @csrf
             <div class="form-group">
                 <label for="tour">Select Tour</label>
                 <select name="tour_id" id="tourSelect" class="form-control" required>
                     <option value="">-- Select Tour --</option>
                     @foreach($tours as $tour)
-                        <option value="{{ $tour->id }}" data-days="{{ $tour->duration }}">
-                            {{ $tour->title }} ({{ $tour->duration }} days)
+                        <option value="{{ $tour->id }}" data-days="{{ $tour->duration_days }}">
+                            {{ $tour->title }} ({{ $tour->duration_days }} days)
                         </option>
                     @endforeach
                 </select>
+
             </div>
 
             <hr>
@@ -83,5 +83,35 @@ function addItinerary(day) {
     const container = document.getElementById(`day-${day}-entries`);
     container.insertAdjacentHTML('beforeend', getItineraryRow(day));
 }
+
+document.getElementById('itineraryForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    fetch(`{{ route('admin.itineraries.store') }}`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const responseDiv = document.getElementById('itineraryResponse');
+        if (data.success) {
+            responseDiv.innerHTML = `<div class="alert alert-success">${data.message}</div>`;
+            form.reset();
+            document.getElementById('itineraryDayContainer').innerHTML = '';
+        } else {
+            responseDiv.innerHTML = `<div class="alert alert-danger">${data.message || 'Something went wrong.'}</div>`;
+        }
+    })
+    .catch(error => {
+        console.error('Submission error:', error);
+        document.getElementById('itineraryResponse').innerHTML = `<div class="alert alert-danger">Server error occurred.</div>`;
+    });
+});
 </script>
 @endpush
