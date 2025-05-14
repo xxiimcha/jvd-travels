@@ -48,7 +48,9 @@
                         </ul>
                     </td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
+                        <a href="{{ route('admin.tours.show', $first->id) }}" class="btn btn-sm btn-info">
+                            <i class="fas fa-eye"></i>
+                        </a>
                         <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
                         <form action="#" method="POST" style="display:inline;">
                             @csrf

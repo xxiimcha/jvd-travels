@@ -31,10 +31,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     // Tours
-    Route::get('/tours', [TourController::class, 'index'])->name('admin.tours.index');
+    Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
     Route::get('/tours/create', [TourController::class, 'create'])->name('tours.create');
     Route::post('/tours/store', [TourController::class, 'store'])->name('tours.store');
     Route::get('/tours/import-from-api', [TourController::class, 'importFromAPI'])->name('tours.import');
+    Route::get('/tours/view/{id}', [TourController::class, 'show'])->name('tours.show');
 
     // Hotels
     Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');

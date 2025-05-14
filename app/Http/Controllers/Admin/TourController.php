@@ -20,6 +20,17 @@ class TourController extends Controller
         return view('admin.tours.create');
     }
 
+    public function show($id)
+    {
+        // Get the main tour info
+        $tour = TourSchedule::where('id', $id)->firstOrFail();
+
+        // Group all schedules with the same api_tour_id
+        $schedules = TourSchedule::where('api_tour_id', $tour->api_tour_id)->get();
+
+        return view('admin.tours.show', compact('tour', 'schedules'));
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
