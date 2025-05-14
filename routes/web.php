@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\HotelController;
 use App\Http\Controllers\Admin\ItineraryController;
+use App\Http\Controllers\Admin\TransportationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,4 +46,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/itineraries', [ItineraryController::class, 'index'])->name('itineraries.index');
     Route::post('/itineraries', [ItineraryController::class, 'store'])->name('itineraries.store');
 
+    // Tranportation
+    Route::get('/transport/schedule', [TransportationController::class, 'ratingSchedule'])->name('admin.transportation.rating_schedule');
 }); 
