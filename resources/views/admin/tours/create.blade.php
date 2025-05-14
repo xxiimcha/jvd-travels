@@ -76,6 +76,8 @@ function previewBrochure(event) {
     reader.readAsDataURL(event.target.files[0]);
 }
 
+let selectedTourDate = '';
+
 document.addEventListener('DOMContentLoaded', function () {
     fetch('https://core2.easetravelandtours.com/api/fetch-tour')
         .then(response => response.json())
@@ -100,6 +102,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const tour = JSON.parse(selected.dataset.tour);
+        selectedTourDate = tour.date;
+
         document.getElementById('tourDetails').style.display = 'block';
         document.getElementById('title').value = tour.location + ' Tour';
         document.getElementById('tour_type').value = tour.tour_type;
@@ -107,15 +111,23 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('duration_nights').value = tour.duration_nights;
         document.getElementById('price').value = tour.price;
         document.getElementById('capacity').value = tour.pax;
+
+        // Apply tour min date to existing input
+        document.querySelectorAll('input[name="schedules[]"]').forEach(input => {
+            input.setAttribute('min', selectedTourDate);
+            input.removeAttribute('max');
+        });
     });
 
     document.getElementById('addScheduleBtn').addEventListener('click', function () {
+        if (!selectedTourDate) return;
+
         const container = document.getElementById('scheduleContainer');
         const row = document.createElement('div');
         row.classList.add('row', 'mb-2', 'schedule-row');
         row.innerHTML = `
             <div class="col-md-10">
-                <input type="date" name="schedules[]" class="form-control" required>
+                <input type="date" name="schedules[]" class="form-control" min="${selectedTourDate}" required>
             </div>
             <div class="col-md-2">
                 <button type="button" class="btn btn-danger btn-sm remove-schedule">Remove</button>
@@ -131,4 +143,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+
 @endsection
