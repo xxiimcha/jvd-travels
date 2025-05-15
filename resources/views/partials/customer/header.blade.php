@@ -30,7 +30,7 @@
                         <li class="menu-item-has-children">
                             <a href="#">Tours</a>
                             <ul>
-                                <li><a href="#">Destinations</a></li>
+                                <li><a href="{{url('/tours')}}">Destinations</a></li>
                                 <li><a href="#">Tour Packages</a></li>
                             </ul>
                         </li>

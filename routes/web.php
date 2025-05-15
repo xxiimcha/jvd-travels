@@ -11,8 +11,12 @@ use App\Http\Controllers\Admin\HotelController;
 use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\TransportationController;
 
+//Customer Modules
 use App\Http\Controllers\Customer\CustHotelController;
 use App\Http\Controllers\Customer\CustCarRentalController;
+use App\Http\Controllers\Customer\CustTourController;
+
+//Customer Booking
 use App\Http\Controllers\Customer\HotelBookingController;
 
 Route::get('/', function () { return view('welcome'); });
@@ -34,6 +38,10 @@ Route::post('/hotels/book', [HotelBookingController::class, 'store'])->name('cus
 // Vehicles
 Route::get('/vehicles', [CustCarRentalController::class, 'index'])->name('customer.vehicles.index');
 Route::get('/vehicles/{id}', [CustCarRentalController::class, 'show'])->name('customer.car.show');
+
+// Tours
+Route::get('/tours', [CustTourController::class, 'index'])->name('customer.tours.index');
+Route::get('/tours/{api_tour_id}', [CustTourController::class, 'show'])->name('customer.tours.show');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
