@@ -34,7 +34,7 @@
                                 <li><a href="#">Tour Packages</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Car Rental</a></li>
+                        <li><a href="{{ url('/vehicles') }}">Car Rental</a></li>
                         <li><a href="{{ url('/hotels') }}">Hotel Reservation</a></li>
                     </ul>
                 </nav>

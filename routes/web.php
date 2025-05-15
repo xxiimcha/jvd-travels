@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\TransportationController;
 
 use App\Http\Controllers\Customer\CustHotelController;
+use App\Http\Controllers\Customer\CustCarRentalController;
 
 Route::get('/', function () { return view('welcome'); });
 
@@ -24,6 +25,11 @@ Route::post('/customer/register', [CustomerAuthController::class, 'register'])->
 
 // Customer Hotels
 Route::get('/hotels', [CustHotelController::class, 'index'])->name('customer.hotels.index');
+
+// Vehicles
+Route::get('/vehicles', [CustCarRentalController::class, 'index'])->name('customer.vehicles.index');
+Route::get('/vehicles/{id}', [CustCarRentalController::class, 'show'])->name('customer.car.show');
+
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {
