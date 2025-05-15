@@ -1,7 +1,7 @@
 <div class="dashboard-header sticky-header">
     <div class="content-left logo-section pull-left">
         <h1><a href="{{ url('/admin/dashboard') }}">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
+            <img src="{{ asset('assets/logo.png') }}" alt="Logo" style="height: 50px;">
         </a></h1>
     </div>
     <div class="heaer-content-right pull-right">

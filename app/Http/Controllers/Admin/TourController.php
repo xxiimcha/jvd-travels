@@ -28,8 +28,12 @@ class TourController extends Controller
         // Group all schedules with the same api_tour_id
         $schedules = TourSchedule::where('api_tour_id', $tour->api_tour_id)->get();
 
-        return view('admin.tours.show', compact('tour', 'schedules'));
+        // Fetch itineraries using the local tour ID (not api_tour_id)
+        $itineraries = \App\Models\Itinerary::where('tour_id', $tour->id)->get();
+
+        return view('admin.tours.show', compact('tour', 'schedules', 'itineraries'));
     }
+
 
     public function store(Request $request)
     {

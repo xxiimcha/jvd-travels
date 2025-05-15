@@ -5,24 +5,24 @@
 @section('content')
 <div class="card shadow card-info card-outline">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h3 class="card-title"><i class="fas fa-map-marked-alt me-1"></i> Tour Details - {{ $tour->title }}</h3>
+        <h3 class="card-title">Tour Details - {{ $tour->title }}</h3>
         <a href="{{ route('admin.tours.index') }}" class="btn btn-secondary btn-sm">
-            <i class="fas fa-arrow-left"></i> Back
+            Back
         </a>
     </div>
 
     <div class="card-body">
         <div class="row mb-3">
             <div class="col-md-6">
-                <p><strong><i class="fas fa-tag me-1"></i>Tour Type:</strong> {{ $tour->tour_type }}</p>
-                <p><strong><i class="fas fa-clock me-1"></i>Duration:</strong> {{ $tour->duration_days }}D / {{ $tour->duration_nights }}N</p>
-                <p><strong><i class="fas fa-users me-1"></i>Capacity:</strong> {{ $tour->capacity }}</p>
-                <p><strong><i class="fas fa-info-circle me-1"></i>Price Basis:</strong> {{ $tour->price_basis }}</p>
+                <p><strong>Tour Type:</strong> {{ $tour->tour_type }}</p>
+                <p><strong>Duration:</strong> {{ $tour->duration_days }}D / {{ $tour->duration_nights }}N</p>
+                <p><strong>Capacity:</strong> {{ $tour->capacity }}</p>
+                <p><strong>Price Basis:</strong> {{ $tour->price_basis }}</p>
             </div>
             <div class="col-md-6">
-                <p><strong><i class="fas fa-money-bill-wave me-1"></i>Price:</strong> ₱{{ number_format($tour->price, 2) }}</p>
+                <p><strong>Price:</strong> ₱{{ number_format($tour->price, 2) }}</p>
                 @if ($tour->brochure)
-                <p><strong><i class="fas fa-file-pdf me-1"></i>Brochure:</strong>
+                <p><strong>Brochure:</strong>
                     <a href="{{ asset('storage/brochures/' . $tour->brochure) }}" target="_blank" class="btn btn-sm btn-outline-primary">
                         View Brochure
                     </a>
@@ -32,16 +32,16 @@
         </div>
 
         <div class="mb-3">
-            <h5><i class="fas fa-align-left me-1"></i>Description</h5>
+            <h5>Description</h5>
             <div class="border rounded p-3 bg-light">
-                {!! nl2br(e($tour->description)) !!}
+                {!! $tour->description !!}
             </div>
         </div>
 
         <hr>
 
         <div class="mt-4">
-            <h5><i class="fas fa-calendar-alt me-1"></i>Tour Schedules</h5>
+            <h5>Tour Schedules</h5>
             @if ($schedules->isEmpty())
                 <p class="text-muted">No schedules available.</p>
             @else
@@ -49,12 +49,35 @@
                     @foreach ($schedules as $item)
                     <div class="col-md-4 mb-2">
                         <div class="border p-2 rounded bg-white shadow-sm">
-                            <i class="far fa-calendar-alt text-primary me-1"></i>
                             {{ \Carbon\Carbon::parse($item->schedule_date)->format('F j, Y') }}
                         </div>
                     </div>
                     @endforeach
                 </div>
+            @endif
+        </div>
+
+        <hr>
+
+        <div class="mt-4">
+            <h5>Itinerary</h5>
+            @if ($itineraries->isEmpty())
+                <p class="text-muted">No itinerary found.</p>
+                <a href="{{ route('admin.itineraries.index') }}" class="btn btn-sm btn-primary">
+                    Add Itinerary
+                </a>
+            @else
+                @foreach ($itineraries->groupBy('day_number') as $day => $items)
+                    <div class="mb-3">
+                        <h6 class="text-primary">Day {{ $day }}</h6>
+                        @foreach ($items as $item)
+                            <div class="border rounded p-2 mb-2 bg-light">
+                                <strong>{{ $item->time }}</strong> - {{ $item->title }}
+                                <div>{!! $item->description !!}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endforeach
             @endif
         </div>
     </div>
