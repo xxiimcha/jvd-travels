@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\TransportationController;
 
 use App\Http\Controllers\Customer\CustHotelController;
 use App\Http\Controllers\Customer\CustCarRentalController;
+use App\Http\Controllers\Customer\HotelBookingController;
 
 Route::get('/', function () { return view('welcome'); });
 
@@ -25,11 +26,14 @@ Route::post('/customer/register', [CustomerAuthController::class, 'register'])->
 
 // Customer Hotels
 Route::get('/hotels', [CustHotelController::class, 'index'])->name('customer.hotels.index');
+Route::get('/hotels/{id}', [CustHotelController::class, 'show'])->name('customer.hotels.show');
+
+Route::get('/hotels/book/{id}', [HotelBookingController::class, 'show'])->name('customer.hotels.book');
+Route::post('/hotels/book', [HotelBookingController::class, 'store'])->name('customer.hotels.book.submit');
 
 // Vehicles
 Route::get('/vehicles', [CustCarRentalController::class, 'index'])->name('customer.vehicles.index');
 Route::get('/vehicles/{id}', [CustCarRentalController::class, 'show'])->name('customer.car.show');
-
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {

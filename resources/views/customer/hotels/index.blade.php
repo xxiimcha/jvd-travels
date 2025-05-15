@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="package-content">
                                     <h3>
-                                        <a href="#">{{ $hotel->hotel_name }}</a>
+                                        <a href="{{ route('customer.hotels.show', $hotel->id) }}">{{ $hotel->hotel_name }}</a>
                                     </h3>
                                     <p><strong>Address:</strong> {{ $hotel->address }}</p>
                                     @if (!empty($roomTypes))
