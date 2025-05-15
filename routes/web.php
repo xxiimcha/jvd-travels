@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\HotelController;
 use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\TransportationController;
 
+use App\Http\Controllers\Customer\CustHotelController;
+
 Route::get('/', function () { return view('welcome'); });
 
 // Customer Authentication
@@ -19,6 +21,9 @@ Route::post('/customer/login', [CustomerAuthController::class, 'login']);
 
 Route::get('/customer/register', [CustomerAuthController::class, 'showRegister'])->name('customer.register');
 Route::post('/customer/register', [CustomerAuthController::class, 'register'])->name('customer.register.submit');
+
+// Customer Hotels
+Route::get('/hotels', [CustHotelController::class, 'index'])->name('customer.hotels.index');
 
 // Admin Routes
 Route::prefix('admin')->name('admin.')->group(function () {

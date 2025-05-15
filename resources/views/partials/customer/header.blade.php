@@ -35,13 +35,12 @@
                             </ul>
                         </li>
                         <li><a href="#">Car Rental</a></li>
-                        <li><a href="#">Hotel Reservation</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li><a href="{{ url('/hotels') }}">Hotel Reservation</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="header-btn">
-                <a href="#" class="button-primary">Login</a>
+                <a href="{{ url('/customer/login') }}" class="button-primary">Login</a>
             </div>
         </div>
     </div>
