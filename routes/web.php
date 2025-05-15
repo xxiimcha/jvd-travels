@@ -11,9 +11,7 @@ use App\Http\Controllers\Admin\HotelController;
 use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\TransportationController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return view('welcome'); });
 
 // Customer Authentication
 Route::get('/customer/login', [CustomerAuthController::class, 'showLogin'])->name('customer.login');
@@ -39,8 +37,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/tours/view/{id}', [TourController::class, 'show'])->name('tours.show');
 
     // Hotels
-    Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
-    Route::post('/hotels/upload-image/{id}', [HotelController::class, 'uploadImage'])->name('hotels.uploadImage');
+    Route::prefix('hotels')->name('hotels.')->group(function () {
+        Route::get('/', [HotelController::class, 'index'])->name('index');
+        Route::get('/create', [HotelController::class, 'create'])->name('create');
+        Route::post('/store', [HotelController::class, 'store'])->name('store');
+        Route::post('/upload-image/{hotelId}', [HotelController::class, 'uploadImage'])->name('uploadImage');
+    });
 
     // Itineraries
     Route::get('/itineraries', [ItineraryController::class, 'index'])->name('itineraries.index');

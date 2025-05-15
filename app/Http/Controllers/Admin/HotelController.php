@@ -4,38 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Hotel;
 
 class HotelController extends Controller
 {
-    /**
-     * Display all hotels fetched from external API.
-     */
     public function index()
     {
-        $response = Http::get('https://core2.easetravelandtours.com/api/hotel-information');
+        $hotels = Hotel::all();
 
-        if (!$response->successful()) {
-            return back()->with('error', 'Failed to fetch hotel data from API.');
-        }
-
-        $hotels = $response->json();
-
-        // Load locally uploaded image paths, if any
         $localImages = [];
         foreach ($hotels as $hotel) {
-            $localImages[$hotel['id']] = Storage::disk('public')->exists("hotel_images/{$hotel['id']}.jpg")
-                ? asset("storage/hotel_images/{$hotel['id']}.jpg")
+            $localImages[$hotel->id] = Storage::disk('public')->exists("hotel_images/{$hotel->id}.jpg")
+                ? asset("storage/hotel_images/{$hotel->id}.jpg")
                 : null;
         }
 
         return view('admin.hotels.index', compact('hotels', 'localImages'));
     }
 
-    /**
-     * Upload a local image for a specific hotel ID.
-     */
     public function uploadImage(Request $request, $hotelId)
     {
         $request->validate([
@@ -47,4 +34,38 @@ class HotelController extends Controller
 
         return back()->with('success', 'Image uploaded successfully.');
     }
+
+    public function create()
+    {
+        return view('admin.hotels.create');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'hotel_name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'room_types' => 'required|array',
+            'room_prices' => 'required|array',
+            'room_types.*' => 'required|string|max:255',
+            'room_prices.*' => 'required|numeric|min:0',
+            'address' => 'required|string|max:500',
+            'image' => 'required|image|max:2048',
+        ]);
+    
+        $hotel = Hotel::create([
+            'hotel_name' => $request->hotel_name,
+            'location' => $request->location,
+            'address' => $request->address,
+            'room_type_pricing' => json_encode(array_map(function ($type, $price) {
+                return ['type' => $type, 'price' => $price];
+            }, $request->room_types, $request->room_prices)),
+        ]);
+    
+        if ($request->hasFile('image')) {
+            $request->file('image')->storeAs('hotel_images', $hotel->id . '.jpg', 'public');
+        }
+    
+        return redirect()->route('admin.hotels.index')->with('success', 'Hotel added successfully.');
+    }    
 }
