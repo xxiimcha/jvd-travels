@@ -20,6 +20,11 @@ use App\Http\Controllers\Customer\VehicleBookingController;
 //Customer Booking
 use App\Http\Controllers\Customer\HotelBookingController;
 
+use App\Http\Controllers\Api\ExternalApiController;
+
+
+Route::get('/external/vehicle-bookings', [ExternalApiController::class, 'getVehicleBookings']);
+
 Route::get('/', function () { return view('welcome'); });
 
 // Customer Authentication
