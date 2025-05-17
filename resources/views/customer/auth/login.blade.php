@@ -19,23 +19,44 @@
                 @if(session('error'))
                     <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
-                <form method="POST" action="{{ route('customer.login') }}" class="row">
-                    @csrf
-                    <div class="col-12 mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" required autofocus>
+
+                @if(session('otp_required'))
+                    <form method="POST" action="{{ route('customer.verify.otp') }}" class="row">
+                        @csrf
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Enter OTP sent to your email</label>
+                            <input type="text" name="otp" class="form-control" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="button-primary w-100">Verify OTP</button>
+                        </div>
+                    </form>
+                @else
+                    <form method="POST" action="{{ route('customer.login') }}" class="row">
+                        @csrf
+                        <div class="col-12 mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                        </div>
+                        <div class="col-12 mb-4">
+                            <label class="form-label">Password</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="button-primary w-100">Login</button>
+                        </div>
+                        <div class="col-12 text-center mt-3">
+                            <a href="{{ route('customer.register') }}">Don’t have an account? Register now</a>
+                        </div>
+                    </form>
+                @endif
+
+                @if($errors->has('error'))
+                    <div class="alert alert-danger mt-3">
+                        {{ $errors->first('error') }}
                     </div>
-                    <div class="col-12 mb-4">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" required>
-                    </div>
-                    <div class="col-12">
-                        <button type="submit" class="button-primary w-100">Login</button>
-                    </div>
-                    <div class="col-12 text-center mt-3">
-                        <a href="{{ route('customer.register') }}">Don’t have an account? Register now</a>
-                    </div>
-                </form>
+                @endif
+
             </div>
         </div>
     </div>

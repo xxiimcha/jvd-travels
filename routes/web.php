@@ -25,6 +25,7 @@ Route::get('/', function () { return view('welcome'); });
 // Customer Authentication
 Route::get('/customer/login', [CustomerAuthController::class, 'showLogin'])->name('customer.login');
 Route::post('/customer/login', [CustomerAuthController::class, 'login']);
+Route::post('/customer/verify-otp', [CustomerAuthController::class, 'verifyOtp'])->name('customer.verify.otp');
 
 Route::get('/customer/register', [CustomerAuthController::class, 'showRegister'])->name('customer.register');
 Route::post('/customer/register', [CustomerAuthController::class, 'register'])->name('customer.register.submit');
