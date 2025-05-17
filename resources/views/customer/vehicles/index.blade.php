@@ -40,7 +40,7 @@
                                     </ul>
                                 </div>
                                 <div class="package-content">
-                                    <a href="{{ route('customer.car.show', $vehicle['id']) }}">
+                                    <a href="{{ route('customer.vehicles.show', $vehicle['id']) }}">
                                         {{ $vehicle['model'] }} - {{ $vehicle['manufacturer'] }}
                                     </a>
 
