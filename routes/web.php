@@ -74,3 +74,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Tranportation
     Route::get('/transport/schedule', [TransportationController::class, 'ratingSchedule'])->name('admin.transportation.rating_schedule');
 }); 
+
+Route::post('/logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');

@@ -40,8 +40,26 @@
                 </nav>
             </div>
             <div class="header-btn">
-                <a href="{{ url('/customer/login') }}" class="button-primary">Login</a>
+                @auth
+                    <div class="dropdown">
+                        <button class="button-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ Auth::user()->name }}
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="{{ url('/profile') }}">My Profile</a></li>
+                            <li>
+                                <form method="POST" action="{{ route('customer.logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @else
+                    <a href="{{ route('customer.login') }}" class="button-primary">Login</a>
+                @endauth
             </div>
+
         </div>
     </div>
 
