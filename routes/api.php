@@ -10,10 +10,10 @@ Route::get('/ping', function () {
 });
 
 // Public external vehicle bookings API
-Route::prefix('external')->group(function () {
+Route::prefix('vehicle-bookings')->group(function () {
     // Get all vehicle bookings
-    Route::get('/vehicle-bookings', [ExternalApiController::class, 'getVehicleBookings']);
+    Route::get('/', [ExternalApiController::class, 'getVehicleBookings']);
 
     // Update booking status: approve or reject
-    Route::post('/vehicle-bookings/{id}/status', [ExternalApiController::class, 'updateBookingStatus']);
+    Route::post('/{id}/status', [ExternalApiController::class, 'updateBookingStatus']);
 });
