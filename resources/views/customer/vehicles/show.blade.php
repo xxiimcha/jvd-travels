@@ -65,43 +65,35 @@
                     </div>
                     @endif
 
-                    <div class="widget-bg p-3 shadow-sm">
+                    <div class="widget-bg p-3 shadow-sm mb-3">
                         <h4 class="bg-title mb-3">Vehicle Details</h4>
                         <table class="table table-bordered table-striped mb-0">
                             <tbody>
-                                <tr>
-                                    <th>Type</th>
-                                    <td>{{ $vehicle['vehicle_type'] }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Manufacturer</th>
-                                    <td>{{ $vehicle['manufacturer'] }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Model</th>
-                                    <td>{{ $vehicle['model'] }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Year</th>
-                                    <td>{{ $vehicle['year_of_manufacture'] }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Fuel</th>
-                                    <td>{{ $vehicle['fuel_type'] }}</td>
-                                </tr>
-                                <tr>
-                                    <th>Capacity</th>
-                                    <td>{{ $vehicle['capacity'] }} persons</td>
-                                </tr>
-                                <tr>
-                                    <th>Color</th>
-                                    <td>{{ $vehicle['color'] }}</td>
-                                </tr>
+                                <tr><th>Type</th><td>{{ $vehicle['vehicle_type'] }}</td></tr>
+                                <tr><th>Manufacturer</th><td>{{ $vehicle['manufacturer'] }}</td></tr>
+                                <tr><th>Model</th><td>{{ $vehicle['model'] }}</td></tr>
+                                <tr><th>Year</th><td>{{ $vehicle['year_of_manufacture'] }}</td></tr>
+                                <tr><th>Fuel</th><td>{{ $vehicle['fuel_type'] }}</td></tr>
+                                <tr><th>Capacity</th><td>{{ $vehicle['capacity'] }} persons</td></tr>
+                                <tr><th>Color</th><td>{{ $vehicle['color'] }}</td></tr>
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="text-center">
+                        @auth
+                            <a href="{{ url('/vehicles/book/' . $vehicle['id']) }}" class="button-primary w-100">
+                                Book Now
+                            </a>
+                        @else
+                            <a href="{{ route('customer.login') }}" class="button-primary w-100">
+                                Book Now
+                            </a>
+                        @endauth
+                    </div>
                 </div>
             </div>
+
             <!-- End Sidebar -->
         </div>
     </div>

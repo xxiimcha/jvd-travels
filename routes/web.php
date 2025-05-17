@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\TransportationController;
 use App\Http\Controllers\Customer\CustHotelController;
 use App\Http\Controllers\Customer\CustCarRentalController;
 use App\Http\Controllers\Customer\CustTourController;
+use App\Http\Controllers\Customer\VehicleBookingController;
 
 //Customer Booking
 use App\Http\Controllers\Customer\HotelBookingController;
@@ -37,6 +38,12 @@ Route::post('/hotels/book', [HotelBookingController::class, 'store'])->name('cus
 
 // Vehicles
 Route::get('/vehicles', [CustCarRentalController::class, 'index'])->name('customer.vehicles.index');
+
+// FIX: move this above /vehicles/{id}
+Route::get('/vehicles/book/{id}', [VehicleBookingController::class, 'show'])->name('customer.vehicles.book');
+Route::post('/vehicles/book', [VehicleBookingController::class, 'store'])->name('customer.vehicles.book.submit');
+
+// this should come last to avoid catching `/book/`
 Route::get('/vehicles/{id}', [CustCarRentalController::class, 'show'])->name('customer.car.show');
 
 // Tours
