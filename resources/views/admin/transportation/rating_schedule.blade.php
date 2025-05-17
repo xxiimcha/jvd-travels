@@ -1,59 +1,42 @@
 @extends('layouts.admin')
 
-@section('title', 'Transportation Rating & Schedule')
+@section('title', 'Transportation Rating')
 
 @section('content')
 <div class="card shadow card-outline card-primary">
     <div class="card-header d-flex justify-content-between align-items-center">
-        <h3 class="card-title">Rating & Schedule</h3>
-        <a href="#" class="btn btn-sm btn-primary">
-            <i class="fas fa-plus-circle"></i> Add Transport Schedule
-        </a>
+        <h3 class="card-title mb-0">Transportation Rating</h3>
     </div>
 
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered table-hover">
+            <table class="table table-bordered table-hover align-middle">
                 <thead class="thead-light">
                     <tr>
                         <th>#</th>
                         <th>Transport Name</th>
-                        <th>Departure Time</th>
-                        <th>Arrival Time</th>
-                        <th>Route</th>
-                        <th>Rating</th>
-                        <th>Actions</th>
+                        <th>Owner/Company</th>
+                        <th>Price</th>
                     </tr>
                 </thead>
                 <tbody>
                     @php $count = 1; @endphp
-                    @forelse ($schedules as $schedule)
+
+                    @forelse ($schedules['data'] ?? [] as $schedule)
                     <tr>
                         <td>{{ $count++ }}</td>
-                        <td>{{ $schedule['company'] }}</td>
-                        <td>--</td> {{-- No departure time in API --}}
-                        <td>--</td> {{-- No arrival time in API --}}
-                        <td>{{ $schedule['destination_type'] }} - {{ $schedule['destination'] }}</td>
+                        <td>{{ $schedule['model'] ?? 'N/A' }} <small>({{ $schedule['manufacturer'] ?? '' }})</small></td>
+                        <td>{{ $schedule['owner_name'] ?? 'N/A' }}</td>
                         <td>
-                            {{-- Simulated static rating based on price or estimated_time --}}
-                            @php $rating = min(5, ceil($schedule['estimated_time'] / 2)); @endphp
-                            @for ($i = 1; $i <= 5; $i++)
-                                <i class="fas fa-star {{ $i <= $rating ? 'text-warning' : 'text-muted' }}"></i>
-                            @endfor
-                        </td>
-                        <td>
-                            <a href="#" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
-                            <a href="#" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                            <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            ₱ {{ isset($schedule['purchase_price']) ? number_format($schedule['purchase_price'], 2) : 'N/A' }}
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="text-center text-muted">No transportation data available.</td>
+                        <td colspan="4" class="text-center text-muted">No vehicle data available.</td>
                     </tr>
                     @endforelse
                 </tbody>
-
             </table>
         </div>
     </div>

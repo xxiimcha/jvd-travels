@@ -23,11 +23,16 @@ use App\Http\Controllers\Customer\HotelBookingController;
 use App\Http\Controllers\Api\ExternalApiController;
 
 
+// Public API (no auth)
 Route::get('/external/vehicle-bookings', [ExternalApiController::class, 'getVehicleBookings']);
 
-Route::get('/', function () { return view('welcome'); });
+Route::get('/', function () {
+    return view('welcome');
+});
 
+// ----------------------
 // Customer Authentication
+// ----------------------
 Route::get('/customer/login', [CustomerAuthController::class, 'showLogin'])->name('customer.login');
 Route::post('/customer/login', [CustomerAuthController::class, 'login']);
 Route::post('/customer/verify-otp', [CustomerAuthController::class, 'verifyOtp'])->name('customer.verify.otp');
@@ -35,14 +40,19 @@ Route::post('/customer/verify-otp', [CustomerAuthController::class, 'verifyOtp']
 Route::get('/customer/register', [CustomerAuthController::class, 'showRegister'])->name('customer.register');
 Route::post('/customer/register', [CustomerAuthController::class, 'register'])->name('customer.register.submit');
 
+Route::post('/logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');
+
+// ----------------------
 // Customer Hotels
+// ----------------------
 Route::get('/hotels', [CustHotelController::class, 'index'])->name('customer.hotels.index');
 Route::get('/hotels/{id}', [CustHotelController::class, 'show'])->name('customer.hotels.show');
-
 Route::get('/hotels/book/{id}', [HotelBookingController::class, 'show'])->name('customer.hotels.book');
 Route::post('/hotels/book', [HotelBookingController::class, 'store'])->name('customer.hotels.book.submit');
 
+// ----------------------
 // Vehicles
+// ----------------------
 Route::get('/vehicles', [CustCarRentalController::class, 'index'])->name('customer.vehicles.index');
 
 // FIX: move this above /vehicles/{id}
@@ -52,17 +62,21 @@ Route::post('/vehicles/book', [VehicleBookingController::class, 'store'])->name(
 // this should come last to avoid catching `/book/`
 Route::get('/vehicles/{id}', [CustCarRentalController::class, 'show'])->name('customer.car.show');
 
+// ----------------------
 // Tours
+// ----------------------
 Route::get('/tours', [CustTourController::class, 'index'])->name('customer.tours.index');
 Route::get('/tours/{api_tour_id}', [CustTourController::class, 'show'])->name('customer.tours.show');
 
+// ----------------------
 // Admin Routes
+// ----------------------
 Route::prefix('admin')->name('admin.')->group(function () {
     // Login
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AdminAuthController::class, 'login'])->name('login.submit');
 
-    // Dashboard (protected, add middleware if needed)
+    // Dashboard
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     // Tours
@@ -84,8 +98,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/itineraries', [ItineraryController::class, 'index'])->name('itineraries.index');
     Route::post('/itineraries', [ItineraryController::class, 'store'])->name('itineraries.store');
 
-    // Tranportation
-    Route::get('/transport/schedule', [TransportationController::class, 'ratingSchedule'])->name('admin.transportation.rating_schedule');
-}); 
+    // Transportation Rating Schedule
+    Route::get('/transport/schedule', [TransportationController::class, 'ratingSchedule'])->name('transportation.rating_schedule');
 
-Route::post('/logout', [CustomerAuthController::class, 'logout'])->name('customer.logout');
+    // ✅ NEW: Vehicle Bookings Page
+    Route::get('/transport/bookings', [TransportationController::class, 'index'])->name('transport.bookings');
+});
