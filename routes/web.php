@@ -96,13 +96,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Status update for a booking
     Route::put('/tours/bookings/{id}', [TourController::class, 'updateBookingStatus'])->name('admin.tours.bookings.update');
 
-
     // Hotels
     Route::prefix('hotels')->name('hotels.')->group(function () {
         Route::get('/', [HotelController::class, 'index'])->name('index');
         Route::get('/create', [HotelController::class, 'create'])->name('create');
         Route::post('/store', [HotelController::class, 'store'])->name('store');
         Route::post('/upload-image/{hotelId}', [HotelController::class, 'uploadImage'])->name('uploadImage');
+        Route::get('/bookings', [HotelController::class, 'bookings'])->name('bookings');
+        Route::patch('/bookings/{id}', [HotelController::class, 'updateBookingStatus'])->name('bookings.update');
+
     });
 
     // Itineraries
