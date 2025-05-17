@@ -35,4 +35,29 @@ class ExternalApiController extends Controller
             'data' => $bookings
         ], 200);
     }
+
+    public function updateBookingStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:approved,rejected'
+        ]);
+
+        $booking = VehicleBooking::find($id);
+
+        if (!$booking) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Booking not found.'
+            ], 404);
+        }
+
+        $booking->status = $request->status;
+        $booking->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Booking has been {$request->status}.",
+            'data' => $booking
+        ]);
+    }
 }
