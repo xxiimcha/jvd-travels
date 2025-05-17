@@ -27,7 +27,7 @@
                                 <a class="nav-link active" data-toggle="tab" href="#overview">Overview</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#schedules">Available Schedules</a>
+                                <a class="nav-link" data-bs-toggle="tab" href="#schedules" role="tab">Available Schedules</a>
                             </li>
                         </ul>
                         <div class="tab-content pt-3">
@@ -51,7 +51,7 @@
                                                             <p class="card-text mb-1 text-muted">Price: ₱{{ number_format($schedule->price, 2) }}</p>
                                                             <p class="card-text text-muted">Capacity: {{ $schedule->capacity }} pax</p>
                                                         </div>
-                                                        <a href="#" class="btn btn-primary mt-3 w-100">Book Schedule</a>
+                                                        <a href="{{ route('customer.tours.book.schedule', $schedule->id) }}" class="btn btn-primary mt-3 w-100">Book Schedule</a>
                                                     </div>
                                                 </div>
                                             </div>

@@ -20,6 +20,13 @@ use App\Http\Controllers\Customer\VehicleBookingController;
 //Customer Booking
 use App\Http\Controllers\Customer\HotelBookingController;
 
+use App\Http\Controllers\Api\ExternalApiController;
+
+
+// Public API (no auth)
+Route::get('/external/vehicle-bookings', [ExternalApiController::class, 'getVehicleBookings']);
+Route::post('/external/vehicle-bookings/{id}/status', [ExternalApiController::class, 'updateBookingStatus']);
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -62,6 +69,9 @@ Route::get('/vehicles/{id}', [CustCarRentalController::class, 'show'])->name('cu
 // ----------------------
 Route::get('/tours', [CustTourController::class, 'index'])->name('customer.tours.index');
 Route::get('/tours/{api_tour_id}', [CustTourController::class, 'show'])->name('customer.tours.show');
+
+Route::get('/tours/book-schedule/{id}', [CustTourController::class, 'bookSchedule'])->name('customer.tours.book.schedule');
+Route::post('/tours/book-schedule/{id}', [CustTourController::class, 'submitBooking'])->name('customer.tours.book.schedule.submit');
 
 // ----------------------
 // Admin Routes
