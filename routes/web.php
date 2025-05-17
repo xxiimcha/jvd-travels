@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\HotelController;
 use App\Http\Controllers\Admin\ItineraryController;
 use App\Http\Controllers\Admin\TransportationController;
+use App\Http\Controllers\Admin\UserController;
 
 // Customer Modules
 use App\Http\Controllers\Customer\CustTourController;
@@ -81,6 +82,8 @@ Route::prefix('tours')->name('customer.tours.')->group(function () {
 // Admin Routes
 // ----------------------
 Route::prefix('admin')->name('admin.')->group(function () {
+    // User
+    Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
 
     // Admin Auth
     Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('login');

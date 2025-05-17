@@ -50,10 +50,6 @@
             </li>
 
             <li>
-                <a href="{{ url('/admin/feedback') }}"><i class="fas fa-comments"></i> Feedback</a>
-            </li>
-
-            <li>
                 <a href="{{ url('/admin/logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
             </li>
         </ul>
