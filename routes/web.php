@@ -89,6 +89,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/tours/store', [TourController::class, 'store'])->name('tours.store');
     Route::get('/tours/import-from-api', [TourController::class, 'importFromAPI'])->name('tours.import');
     Route::get('/tours/view/{id}', [TourController::class, 'show'])->name('tours.show');
+    
+    // Tour bookings page
+    Route::get('/tours/bookings', [TourController::class, 'bookings'])->name('tours.bookings');
+
+    // Status update for a booking
+    Route::put('/tours/bookings/{id}', [TourController::class, 'updateBookingStatus'])->name('admin.tours.bookings.update');
+
 
     // Hotels
     Route::prefix('hotels')->name('hotels.')->group(function () {

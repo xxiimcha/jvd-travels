@@ -74,4 +74,25 @@ class TourController extends Controller
 
         return redirect()->route('admin.tours.create')->with('success', 'Tour schedules created successfully.');
     }
+
+    public function bookings()
+    {
+        $bookings = \App\Models\TourBooking::latest()->get();
+        return view('admin.tours.bookings', compact('bookings'));
+    }
+
+    public function updateBookingStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:approved,rejected'
+        ]);
+
+        $booking = \App\Models\TourBooking::findOrFail($id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        return redirect()->back()->with('success', 'Booking has been ' . $request->status . '.');
+    }
+
+
 }

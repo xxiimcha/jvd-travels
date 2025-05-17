@@ -13,6 +13,7 @@
                 <ul>
                     <li><a href="{{ url('/admin/tours') }}">All Tours</a></li>
                     <li><a href="{{ url('/admin/tours/create') }}">Create Tour</a></li>
+                    <li><a href="{{ url('/admin/tours/bookings') }}">Tour Bookings</a></li>
                 </ul>
             </li>
 
