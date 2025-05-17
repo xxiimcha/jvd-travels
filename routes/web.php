@@ -22,15 +22,14 @@ use App\Http\Controllers\Customer\HotelBookingController;
 
 use App\Http\Controllers\Api\ExternalApiController;
 
+use App\Http\Controllers\HomeController;
+
+Route::get('/', [HomeController::class, 'homepage'])->name('home');
+
 
 // Public API (no auth)
 Route::get('/external/vehicle-bookings', [ExternalApiController::class, 'getVehicleBookings']);
 Route::post('/external/vehicle-bookings/{id}/status', [ExternalApiController::class, 'updateBookingStatus']);
-
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 // ----------------------
 // Customer Authentication

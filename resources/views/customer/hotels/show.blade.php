@@ -24,10 +24,10 @@
                     <div class="tab-container mt-4">
                         <ul class="nav nav-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#overview">Overview</a>
+                                <a class="nav-link active" data-bs-toggle="tab" href="#overview">Overview</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#rooms">Room Types</a>
+                                <a class="nav-link" data-bs-toggle="tab" href="#rooms">Room Types</a>
                             </li>
                         </ul>
                         <div class="tab-content pt-3">
